@@ -1,0 +1,1 @@
+export const __BASEURL = "https://eventful-moments-api.onrender.com/api/v1"
