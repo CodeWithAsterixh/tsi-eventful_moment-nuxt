@@ -58,8 +58,8 @@
     
     <br />
 
-    <div class="w-full !mt-5 flex items-center gap-2">
-        <RouterLink :to="`/moments/${params.id}/edit`" class="px-16 py-4 bg-others2 text-white rounded-xl text-sm">Edit</RouterLink>
+    <div class="w-full !mt-5 flex items-center gap-2 flex-wrap *:flex-grow *:basis-[200px]">
+        <RouterLink :to="`/moments/${params.id}/edit`" class="px-16 py-4 bg-others2 text-white rounded-xl text-sm text-center">Edit</RouterLink>
         <button @click="handleDelete" class="px-16 py-4 bg-others1 text-white rounded-xl text-sm">Delete</button>
     </div>
   </div>

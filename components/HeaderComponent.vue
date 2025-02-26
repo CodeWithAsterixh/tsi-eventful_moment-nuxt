@@ -5,7 +5,7 @@ const { auth } = useAuth();
 
 <template>
   <header class="bg-primary sticky top-0 w-full text-white py-4 px-4 sm:px-8">
-    <div class="container flex items-center justify-between relative m-auto">
+    <div class="container flex items-center justify-between m-auto">
       <h1 class="italic !p-0 !bg-transparent !font-semibold">
         Eventful moments
       </h1>
