@@ -1,5 +1,8 @@
-<script lang="ts" setup></script>
-
+<script setup lang="ts">
+useHead({
+  title:"Register | Save the future at your finger tips"
+})
+</script>
 <template>
   <div
     class="w-full min-h-[calc(100vh-10rem)] flex items-center justify-center"

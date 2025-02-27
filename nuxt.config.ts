@@ -5,5 +5,6 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
   ],
+  plugins:['~/plugins/toast.ts'],
   compatibilityDate: "2025-02-23",
 });

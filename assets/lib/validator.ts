@@ -13,7 +13,7 @@ const inputTextReqLen = ({
   return z
     .string({
       required_error: `${label} is required`,
-    })
+    }).trim()
     .min(len, {
       message: `Must be at least ${len} characters long`,
     });
@@ -77,7 +77,4 @@ export const ContentSchema = z.object({
   }),
 });
 
-// inputTextReqLen({
-//     label:"Date",
-//     len:3
-// })
+

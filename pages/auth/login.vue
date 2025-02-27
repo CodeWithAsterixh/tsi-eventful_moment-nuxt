@@ -1,4 +1,8 @@
-<script lang="ts" setup></script>
+<script setup lang="ts">
+useHead({
+  title:"Login | don't miss a moment"
+})
+</script>
 
 <template>
   <div

@@ -21,7 +21,7 @@ interface ProfileResponse {
   data: UserProfile;
 }
 
-const authState = reactive({
+const userAuthenticationState = reactive({
   isAuthenticated: false,
   loading: false,
   error: false,
@@ -29,83 +29,99 @@ const authState = reactive({
   token: null as string | null,
 });
 
-// const isClient = typeof window !== "undefined";
-
 const actions = {
   loginUser: async (loginData: LoginData) => {
-    authState.loading = true;
+    const { $toast } = useNuxtApp();
+
+    userAuthenticationState.loading = true;
     try {
       const res = await $fetch<LoginResponse>("/api/login", {
         method: "post",
         body: loginData,
       });
       const token = res.data;
-      authState.token = token;
-      if (authState.token) {
-        authState.error = false;
+      userAuthenticationState.token = token;
+      if (userAuthenticationState.token) {
+        userAuthenticationState.error = false;
         useCookie("token").value = token;
-        authState.isAuthenticated = true;
+        userAuthenticationState.isAuthenticated = true;
         // Navigate to the home page
-
-        navigateTo("/");
+        $toast.success("Login successful");
+        setTimeout(() => {
+          return navigateTo("/");
+        }, 2000);
       }
     } catch (error) {
-      authState.error = true;
+      $toast.error("Something went wrong");
+      userAuthenticationState.error = true;
       console.error("Login error:", error);
     } finally {
-      authState.loading = false;
+      userAuthenticationState.loading = false;
     }
   },
 
   loadUser: async (token: string) => {
-    authState.token = token;
-    authState.loading = true;
+    userAuthenticationState.token = token;
+    userAuthenticationState.loading = true;
 
     try {
       const res = await $fetch<ProfileResponse>("/api/profile");
       if (res?.data) {
-        authState.user = res.data;
-        authState.isAuthenticated = true;
+        userAuthenticationState.user = res.data;
+        userAuthenticationState.isAuthenticated = true;
       }
     } catch (error) {
-      authState.error = true;
-      authState.isAuthenticated = false;
+      userAuthenticationState.error = true;
+
+      userAuthenticationState.isAuthenticated = false;
     } finally {
-      authState.loading = false;
+      userAuthenticationState.loading = false;
     }
   },
 
   logOutUser: () => {
+    const { $toast } = useNuxtApp();
+
     // Clear the token from cookies and state
     const tokenCookie = useCookie("token");
     tokenCookie.value = null;
-    authState.isAuthenticated = false;
-    authState.token = null;
-    authState.user = null;
-    return navigateTo("/auth/login");
+    userAuthenticationState.isAuthenticated = false;
+    userAuthenticationState.token = null;
+    userAuthenticationState.user = null;
+    $toast.success("User logged out");
+    setTimeout(() => {
+      return navigateTo("/auth/login");
+    }, 2000);
   },
 
   registerUser: async (registerData: RegisterData) => {
-    authState.loading = true;
+    const { $toast } = useNuxtApp();
+
+    userAuthenticationState.loading = true;
     try {
       await $fetch("/api/register", {
         method: "post",
         body: registerData,
       });
-      authState.error = false;
+      userAuthenticationState.error = false;
+      $toast.success(
+        `Welcome ${registerData.fullname}, your account has been created, have fun...`
+      );
 
-      return navigateTo("/");
+      setTimeout(() => {
+        return navigateTo("/");
+      }, 2000);
     } catch (error) {
-      authState.error = true;
-      console.error("Registration error:", error);
+      userAuthenticationState.error = true;
+      $toast.error(`Something went wrong`);
     } finally {
-      authState.loading = false;
+      userAuthenticationState.loading = false;
     }
   },
 };
 export const useAuth = () => {
   return {
-    auth: authState,
+    auth: userAuthenticationState,
     actions,
   };
 };

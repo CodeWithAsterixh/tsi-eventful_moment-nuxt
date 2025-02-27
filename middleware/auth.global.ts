@@ -4,12 +4,14 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const { auth } = useAuth();
 
   // if a token exists, load the user profile
-  if (token) {
+  if (token && !auth.user) {
     loadUser(token);
   }
 
   // If no token exists and the target route isn't the login page, redirect to login
   if (!token && !to.path.includes("auth")) {
-    return navigateTo('/auth/login');
+    setTimeout(() => {
+      return navigateTo('/auth/login');
+    }, 2000);
   }
 });
