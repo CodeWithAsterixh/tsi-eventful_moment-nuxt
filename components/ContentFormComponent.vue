@@ -54,7 +54,7 @@ const onSubmit = handleSubmit(async (vals) => {
         },
       });
       auth.user = null
-      $toast.success(`New moment has been added`)
+      $toast.success(`Content for ${dataFill?.title} has been updated`)
       response.successFinal = true
       setTimeout(() => {
       return navigateTo(`/moments/${id}`);
@@ -77,7 +77,8 @@ const onSubmit = handleSubmit(async (vals) => {
         },
       });
       auth.user = null
-      $toast.success(`Content for ${dataFill?.title} has been updated`)
+      $toast.success(`New moment has been added`)
+
       response.successFinal = true
       setTimeout(() => {
         return navigateTo(`/moments/${res.data.value?.data?._id}`);
