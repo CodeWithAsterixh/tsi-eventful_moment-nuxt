@@ -81,7 +81,7 @@ const onSubmit = handleSubmit(async (vals) => {
 
       response.successFinal = true
       setTimeout(() => {
-        return navigateTo(`/moments/${res.data.value?.data?._id}`);
+        return navigateTo(`/`);
       }, 2000);
     } catch (error) {
       response.error = true;
